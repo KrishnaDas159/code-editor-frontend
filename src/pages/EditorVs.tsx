@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Code, Copy, MessageCircle, Users, Send, LogOut, Play } from "lucide-react";
-const backendURL = import.meta.env.VITE_BACK_URL?.replace(/^http/, "ws");
+const temp = import.meta.env.VITE_BACK_URL?.replace(/^http/, "ws");
 
 
 const socket = io(backendURL, {
