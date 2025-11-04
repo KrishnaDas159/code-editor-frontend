@@ -16,7 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Code, Copy, MessageCircle, Users, Send, LogOut, Play } from "lucide-react";
-const temp = import.meta.env.VITE_BACK_URL?.replace(/^http/, "ws");
+const backendURL = import.meta.env.VITE_BACK_URL?.replace(/^http/, "ws");
+const httpBackendURL = import.meta.env.VITE_BACK_URL;
+
 
 
 const socket = io(backendURL, {
@@ -153,7 +155,7 @@ const EditorVs = () => {
       return;
     }
     axios
-      .get(`${temp}/api/sessions/${sessionId}`)
+      .get(`${httpBackendURL}/api/sessions/${sessionId}`)
       .then((res) => {
         setRoomId(res.data._id || sessionId);
         setSelectedLanguage(res.data.language || "typescript");
@@ -262,7 +264,7 @@ const EditorVs = () => {
     try {
       setSelectedLanguage(newLanguage);
       socket.emit("languageChange", { roomId, language: newLanguage });
-      axios.put(`${temp}/api/sessions/${roomId}`, { language: newLanguage }).catch((err) => {
+      axios.put(`${httpBackendURL}/api/sessions/${roomId}`, { language: newLanguage }).catch((err) => {
         console.error("Error updating language:", err);
       });
     } catch (err) {
