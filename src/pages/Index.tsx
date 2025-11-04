@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import heroImage from "../assets/hero-coding.jpg";
 import { useNavigate } from "react-router-dom";
 const Index = () => {
+  const temp = import.meta.env.VITE_BACK_URL;
+
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-hero">

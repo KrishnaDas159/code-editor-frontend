@@ -16,8 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Code, Copy, MessageCircle, Users, Send, LogOut, Play } from "lucide-react";
+const temp = import.meta.env.VITE_BACK_URL;
 
-const socket = io("http://localhost:3000", {
+
+const socket = io(`${temp}`, {
   transports: ["websocket"],
   reconnection: true,
 });
@@ -51,7 +53,7 @@ const EditorVs = () => {
   const messagesEndRef = useRef(null);
   const isDragging = useRef(false);
   const monacoRef = useRef(null);
-
+  
   const [userName] = useState(() => {
     try {
       const storedUser = JSON.parse(localStorage.getItem("user") ?? "null");
@@ -151,7 +153,7 @@ const EditorVs = () => {
       return;
     }
     axios
-      .get(`http://localhost:3000/api/sessions/${sessionId}`)
+      .get(`${temp}/api/sessions/${sessionId}`)
       .then((res) => {
         setRoomId(res.data._id || sessionId);
         setSelectedLanguage(res.data.language || "typescript");
@@ -260,7 +262,7 @@ const EditorVs = () => {
     try {
       setSelectedLanguage(newLanguage);
       socket.emit("languageChange", { roomId, language: newLanguage });
-      axios.put(`http://localhost:3000/api/sessions/${roomId}`, { language: newLanguage }).catch((err) => {
+      axios.put(`${temp}/api/sessions/${roomId}`, { language: newLanguage }).catch((err) => {
         console.error("Error updating language:", err);
       });
     } catch (err) {

@@ -8,6 +8,8 @@ import { Trash2, ArrowLeft } from "lucide-react";
 const SavedProjects = () => {
   const [saved, setSaved] = useState([]);
   const navigate = useNavigate();
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   useEffect(() => {
     const fetchSaved = async () => {
@@ -15,7 +17,7 @@ const SavedProjects = () => {
       if (!token) return;
 
       try {
-        const res = await axios.get("http://localhost:3000/api/savesessions/saved", {
+        const res = await axios.get(`${temp}/api/savesessions/saved`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSaved(res.data);
@@ -32,7 +34,7 @@ const SavedProjects = () => {
     if (!token) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/savesessions/unsave/${sessionId}`, {
+      await axios.delete(`${temp}/api/savesessions/unsave/${sessionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSaved((prev) => prev.filter((s) => s._id !== sessionId));

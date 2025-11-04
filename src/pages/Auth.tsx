@@ -15,6 +15,8 @@ const Auth = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -27,8 +29,8 @@ const Auth = () => {
 
     try {
       const endpoint = isLogin
-        ? "http://localhost:3000/api/auth/login"
-        : "http://localhost:3000/api/auth/register";
+        ? `${temp}/api/auth/login`
+        : `${temp}/api/auth/register`;
 
       const response = await fetch(endpoint, {
         method: "POST",

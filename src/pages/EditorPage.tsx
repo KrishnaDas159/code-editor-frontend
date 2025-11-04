@@ -20,6 +20,8 @@ const EditorPage = () => {
     { value: "java", label: "Java" },
     { value: "c++", label: "C++" },
   ];
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   const handleStartSession = async () => {
   if (!sessionName) return alert("Please enter a session name");
@@ -40,7 +42,7 @@ const EditorPage = () => {
 
     console.log("🔍 Creating session with payload:", payload);
 
-    const response = await fetch("http://localhost:3000/api/sessions", {
+    const response = await fetch(`${temp}/api/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

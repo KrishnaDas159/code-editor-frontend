@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [recentSessions, setRecentSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -21,10 +23,10 @@ const Dashboard = () => {
         if (!token) return console.error("Token not found");
 
         const [createdRes, joinedRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/sessions", {
+          axios.get(`${temp}/api/sessions`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:3000/api/sessions/joined", {
+          axios.get(`${temp}/api/sessions/joined`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -71,7 +73,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       if (!token) return console.error("No token found");
 
-      await axios.delete(`http://localhost:3000/api/sessions/${sessionId}`, {
+      await axios.delete(`${temp}/api/sessions/${sessionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -88,7 +90,7 @@ const Dashboard = () => {
       if (!token) return console.error("No token found");
 
       await axios.post(
-        "http://localhost:3000/api/savesessions/save",
+        `${temp}/api/savesessions/save`,
         { sessionId: session.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );

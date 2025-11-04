@@ -12,6 +12,8 @@ const Join = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   const handleJoinSession = async () => {
   try {
@@ -31,14 +33,14 @@ const Join = () => {
     const token = localStorage.getItem("token");
 
     // 1️⃣ Check if session exists
-    const res = await axios.get(`http://localhost:3000/api/sessions/${extractedId}`, {
+    const res = await axios.get(`${temp}/api/sessions/${extractedId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     if (res.status === 200 && res.data) {
       // 2️⃣ Join the session
       await axios.post(
-        `http://localhost:3000/api/sessions/${extractedId}/join`,
+        `${temp}/api/sessions/${extractedId}/join`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

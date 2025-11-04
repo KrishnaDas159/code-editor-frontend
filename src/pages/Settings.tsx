@@ -33,6 +33,8 @@ const Settings = () => {
 
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
+  const temp = import.meta.env.VITE_BACK_URL;
+
 
   const avatarColors = [
     { name: "blue", class: "bg-blue-500" },
@@ -103,7 +105,7 @@ const Settings = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${USER_ID}`);
+      const res = await fetch(`${temp}/api/users/${USER_ID}`);
       if (!res.ok) throw new Error("Failed to fetch user data");
       const data = await res.json();
       setUsername(data.name || "Unknown");
@@ -129,7 +131,7 @@ const Settings = () => {
   // Save profile to backend
   const saveProfile = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/${USER_ID}`, {
+    const res = await fetch(`${temp}/api/users/${USER_ID}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
